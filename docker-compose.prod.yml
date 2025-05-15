@@ -18,8 +18,8 @@ services:
       - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.entrypoints=websecure"
       - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.tls=true"
       - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.tls.certresolver=cloudflare"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.middlewares=only-from-frontend@docker"
-      - "traefik.http.middlewares.only-from-frontend.headers.customrequestheaders.X-Allowed-Origin=https://${DOMAIN}"
+
+
     env_file:
       - .env
     networks:

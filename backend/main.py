@@ -145,14 +145,6 @@ def analyze_essentials(text):
 
 # API endpoints
 
-
-@app.middleware("http")
-async def verify_origin(request: Request, call_next):
-    allowed_origin = request.headers.get("x-allowed-origin")
-    if allowed_origin != f"https://{os.getenv('DOMAIN')}":
-        raise HTTPException(status_code=403, detail="Forbidden: Invalid origin")
-    return await call_next(request)
-
 @app.post("/api/upload", response_model=UploadResponse, status_code=201)
 async def upload_document(file: UploadFile = File(...)):
     """Upload a document and generate a UUID for it"""
