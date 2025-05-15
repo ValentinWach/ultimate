@@ -18,7 +18,6 @@ interface AnalysisResponse {
     essentials: AnalysisEssenstials;
 }
 
-
 interface AnalysisEssenstials {
     vertragsparteien: string;
     mietgegenstand: string;
