@@ -24,9 +24,9 @@ jobs:
       - name: Deploy to Staging Server
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.DEPLOY_SSH_PORT }} ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_SERVER_IP }} << 'EOF'
-            cd docker/ultimate/STAGE  # Pfad zu deinem Projekt auf dem Server
+            cd /home/wach/ultimate/STAGE 
             eval $(ssh-agent -s)
-            ssh-add ../.ssh/id_git
+            ssh-add ../.ssh/id_github
             git pull origin main
             docker compose -f docker-compose.prod.yml up --build -d
           EOF
@@ -47,9 +47,9 @@ jobs:
       - name: Deploy to Production Server
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.DEPLOY_SSH_PORT }} ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_SERVER_IP }} << 'EOF'
-            cd docker/ultimate/PROD  # Pfad zu deinem Projekt auf dem Produktionsserver
+            cd /home/wach/ultimate/STAGE
             eval $(ssh-agent -s)
-            ssh-add ../.ssh/id_git
+            ssh-add ../.ssh/id_github
             git pull origin ${{ github.ref }}  # Holen des spezifischen Tags
             docker compose -f docker-compose.prod.yml up --build -d
           EOF
