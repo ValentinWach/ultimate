@@ -12,13 +12,6 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     command: python -m uvicorn main:app --host 0.0.0.0 --port 5000 --reload
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.rule=Host(`api.${DOMAIN}`)"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.entrypoints=websecure"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.tls.certresolver=cloudflare"
-      - "traefik.http.services.ultimate-web-app-backend-${ENVIRONMENT}.loadbalancer.server.port=5000"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.service=ultimate-web-app-backend-${ENVIRONMENT}"
     env_file:
       - .env
     networks:
@@ -40,9 +33,9 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.rule=Host(`${DOMAIN}`)"
       - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.entrypoints=websecure"
+      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.tls=true"
       - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.tls.certresolver=cloudflare"
-      - "traefik.http.services.ultimate-web-app-frontend-${ENVIRONMENT}.loadbalancer.server.port=3000"
-      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.service=ultimate-web-app-frontend-${ENVIRONMENT}"
+      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.middlewares=auth-admin@docker"
     env_file:
       - .env
     networks:
