@@ -25,8 +25,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.DEPLOY_SSH_PORT }} ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_SERVER_IP }} << 'EOF'
             cd /home/wach/ultimate/STAGE 
-            eval $(ssh-agent -s)
-            ssh-add ../.ssh/github
             git pull origin main
             docker compose -p ultimate-stage -f docker-compose.prod.yml up --build -d
           EOF
@@ -48,8 +46,6 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.DEPLOY_SSH_PORT }} ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_SERVER_IP }} << 'EOF'
             cd /home/wach/ultimate/PROD
-            eval $(ssh-agent -s)
-            ssh-add ../.ssh/github
             git pull origin ${{ github.ref }}  # Holen des spezifischen Tags
             docker compose -p ultimate-prod -f docker-compose.prod.yml up --build -d
           EOF

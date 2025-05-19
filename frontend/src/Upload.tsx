@@ -25,7 +25,7 @@ const Upload: React.FC<UploadProps> = ({ onUploadSuccess }) => {
             setFileName(file.name);
             await uploadFile(file);
         } else {
-            alert("Please upload a PDF, DOC, or DOCX file.");
+            alert("Please upload a PDF; DOC or DOCX file.");
         }
     };
 
