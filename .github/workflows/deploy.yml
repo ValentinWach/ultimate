@@ -28,7 +28,7 @@ jobs:
             eval $(ssh-agent -s)
             ssh-add ../.ssh/github
             git pull origin main
-            docker compose -f docker-compose.prod.yml up --build -d
+            docker compose -p ultimate-stage -f docker-compose.prod.yml up --build -d
           EOF
 
   prod-deploy:
@@ -51,5 +51,5 @@ jobs:
             eval $(ssh-agent -s)
             ssh-add ../.ssh/github
             git pull origin ${{ github.ref }}  # Holen des spezifischen Tags
-            docker compose -f docker-compose.prod.yml up --build -d
+            docker compose -p ultimate-prod -f docker-compose.prod.yml up --build -d
           EOF
