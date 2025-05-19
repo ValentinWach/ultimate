@@ -66,7 +66,7 @@ const Upload: React.FC<UploadProps> = ({ onUploadSuccess }) => {
     return (
         <div style={styles.container}>
             <h1 style={styles.title}>ULTIMATE</h1>
-            <p style={styles.subtitle}>Rent smart, not hard</p>
+            <p style={styles.subtitle}>Rent smart, not hard!</p>
 
             <div style={styles.uploadBox} onClick={triggerFileInput}>
                 <div style={styles.document}>
