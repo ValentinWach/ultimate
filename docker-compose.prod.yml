@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend:
     build: ./backend
-    container_name: ultimate-web-app-backend-${ENVIRONMENT}
+    container_name: ultimate-backend-${ENVIRONMENT}
     volumes:
       - ./backend:/app
       - ./openapi:/openapi
@@ -14,10 +14,10 @@ services:
     command: python -m uvicorn main:app --host 0.0.0.0 --port 5000 --reload
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.rule=Host(`api.${DOMAIN}`)"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.entrypoints=websecure"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.tls=true"
-      - "traefik.http.routers.ultimate-web-app-backend-${ENVIRONMENT}.tls.certresolver=cloudflare"
+      - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.rule=Host(`api.${DOMAIN}`)"
+      - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.entrypoints=websecure"
+      - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls=true"
+      - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls.certresolver=cloudflare"
 
 
     env_file:
@@ -27,7 +27,7 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: ultimate-web-app-frontend-${ENVIRONMENT}
+    container_name: ultimate-frontend-${ENVIRONMENT}
     volumes:
       - ./frontend:/app
       - ./openapi:/openapi
@@ -39,11 +39,11 @@ services:
       - backend
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.rule=Host(`${DOMAIN}`)"
-      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.entrypoints=websecure"
-      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.tls=true"
-      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.tls.certresolver=cloudflare"
-      - "traefik.http.routers.ultimate-web-app-frontend-${ENVIRONMENT}.middlewares=auth-admin@docker"
+      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.entrypoints=websecure"
+      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.tls=true"
+      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.tls.certresolver=cloudflare"
+      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.middlewares=auth-admin@docker"
     env_file:
       - .env
     networks:
