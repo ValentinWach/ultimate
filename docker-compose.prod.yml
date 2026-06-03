@@ -18,6 +18,7 @@ services:
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.entrypoints=websecure"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls=true"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls.certresolver=cloudflare"
+      - "traefik.http.services.ultimate-backend-${ENVIRONMENT}.loadbalancer.server.port=5000"
 
 
     env_file:
