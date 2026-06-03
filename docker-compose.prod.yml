@@ -15,13 +15,12 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.priority=10"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.entrypoints=websecure"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls=true"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls.certresolver=cloudflare"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.service=ultimate-backend-${ENVIRONMENT}"
       - "traefik.http.services.ultimate-backend-${ENVIRONMENT}.loadbalancer.server.port=5000"
-
-
     env_file:
       - .env
     networks:
@@ -42,6 +41,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.priority=1"
       - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.entrypoints=websecure"
       - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.tls=true"
       - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.tls.certresolver=cloudflare"
