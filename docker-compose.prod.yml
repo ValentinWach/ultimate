@@ -14,12 +14,12 @@ services:
     command: python -m uvicorn main:app --host 0.0.0.0 --port 5000 --reload
     labels:
       - "traefik.enable=true"
+      - "trafik.docker.network=web"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.entrypoints=websecure"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls=true"
       - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.tls.certresolver=cloudflare"
-
-
+      - "traefik.http.routers.ultimate-backend-${ENVIRONMENT}.middlewares=authelia@docker"
     env_file:
       - .env
     networks:
@@ -43,7 +43,7 @@ services:
       - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.entrypoints=websecure"
       - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.tls=true"
       - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.tls.certresolver=cloudflare"
-      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.middlewares=auth-admin@docker"
+      - "traefik.http.routers.ultimate-frontend-${ENVIRONMENT}.middlewares=authelia@docker"
     env_file:
       - .env
     networks:
